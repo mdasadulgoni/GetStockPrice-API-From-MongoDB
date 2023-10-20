@@ -1,35 +1,36 @@
 "use client"
 // 1. Import Area
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import { useState } from "react";
 
+
 // 2. Defination Area
-function Home() {
+function Home() { // old way to define a function
   // 2.1 Hooks Variable
-  const [selectedValue,setCelectedValue] = useState("")
+  // const [stockName,setStockName] = useState("")
+  const [selectedValue,setSelectedValue] = useState("")
   const [stockPrice,setStockPrice] = useState("")
 
-  // Function Defination Area
-  const handleChange = (goni)=>{
-    // console.log('ok'+goni);
-    // console.log(goni.target.value);
+// 2.2 Function Define Area
+const handleChange = (anil)=>{ // new way to define a function
+  // console.log("Hi");
+  console.log(anil.target.value);
 
-    // Now Call the API
-    // This is called promisechane
-    fetch('/api/getstockprice').then((Response)=>{
-      return Response.json()
-    }).then((data)=>{
-      console.log(data.price);
-      setStockPrice(data.price)
-    }).catch((err)=>{
+  // call the API
+  fetch('/api/getstockprice').then((res)=>{
+    return res.json()
+  }).then((data)=>{
+    console.log(data);
+    setStockPrice(data.price)
+  }).catch((err)=>{
 
-    }).finally(()=>{
+  }).finally(()=>{
 
-    })
-  }
+  })
+}
   return (
     <>
-      <h1>Corrent Price is {stockPrice} </h1>
+      <h1>Corrent Price is {stockPrice} </h1> 
       <FormControl sx={{ m: 1, minWidth: 600 }} size="small">
         <Select value={selectedValue} onChange={handleChange}>
           <MenuItem value={"IDFC"}>IDFC BANK</MenuItem>
