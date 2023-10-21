@@ -1,23 +1,27 @@
 "use client"
 // 1. Import Area
 import { FormControl, MenuItem, Select } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 // 2. Defination Area
 function Home() { // old way to define a function
   // 2.1 Hooks Variable
-  // const [stockName,setStockName] = useState("")
+  var [stockName,setStockName] = useState("")
+  // var [stockName,setStockName] = useState("ICICI")
+  // var [stockName,setStockName] = useState("IDFC")
   const [selectedValue,setSelectedValue] = useState("")
   const [stockPrice,setStockPrice] = useState("")
+  useEffect(()=>{
+    setInterval(function(){
+      // console.log('Ok');
+      getstockprice(stockName)
+    },3000)
+  },[stockName])
 
 // 2.2 Function Define Area
-const handleChange = (anil)=>{ // new way to define a function
-  // console.log("Hi");
-  console.log(anil.target.value);
-
-  // call the API
-  fetch('/api/getstockprice').then((res)=>{
+const getstockprice = (sn)=>{
+  fetch(`/api/getstockprice?stockName=${sn}`).then((res)=>{
     return res.json()
   }).then((data)=>{
     console.log(data);
@@ -28,6 +32,17 @@ const handleChange = (anil)=>{ // new way to define a function
 
   })
 }
+const handleChange = (anil)=>{ // new way to define a function
+  // console.log("Hi");
+  setStockName(anil.target.value)
+  
+  console.log(anil.target.value);
+  getstockprice(anil.target.value)
+
+  // call the API
+
+}
+// 2.3 Return
   return (
     <>
       <h1>Corrent Price is {stockPrice} </h1> 
